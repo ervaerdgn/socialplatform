@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using socialplatform.Data;
 using socialplatform.Models;
 
 namespace socialplatform.Controllers
@@ -7,19 +9,24 @@ namespace socialplatform.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private static List<User> kullanicilar = new List<User>();
+        private readonly AppDbContext _context;
+
+        public UsersController(AppDbContext context)
+        {
+            _context = context;
+        }
 
         [HttpGet]
-        public ActionResult<List<User>> GetAll()
+        public async Task<ActionResult<List<User>>> GetAll()
         {
-            return kullanicilar;
+            return await _context.Users.ToListAsync();
         }
 
         [HttpPost]
-        public ActionResult<User> Create(User yeniKullanici)
+        public async Task<ActionResult<User>> Create(User yeniKullanici)
         {
-            yeniKullanici.Id = kullanicilar.Count + 1;
-            kullanicilar.Add(yeniKullanici);
+            _context.Users.Add(yeniKullanici);
+            await _context.SaveChangesAsync();
             return Ok(yeniKullanici);
         }
     }
