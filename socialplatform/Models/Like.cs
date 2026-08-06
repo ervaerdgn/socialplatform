@@ -1,12 +1,13 @@
 ﻿namespace socialplatform.Models
 {
-    public class Post
+    public class Like
     {
         public int Id { get; set; }
-        public string Metin { get; set; }=string.Empty;
+        public DateTime Zaman { get; set; } = DateTime.Now;
         public int UserID { get; set; }
-        public DateTime Zaman { get; set; }=DateTime.Now;
-       
         public User? User { get; set; }
+
+        public int PostID { get; set; }
+        public Post? Post { get; set; }
     }
 }
