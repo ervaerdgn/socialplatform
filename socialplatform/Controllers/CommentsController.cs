@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using socialplatform.Data;
 using socialplatform.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace socialplatform.Controllers
 {
@@ -26,8 +28,12 @@ namespace socialplatform.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Comment>> Create(Comment yeniComment)
         {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            yeniComment.UserID = userId;
+
             _context.Comments.Add(yeniComment);
             await _context.SaveChangesAsync();
             return Ok(yeniComment);

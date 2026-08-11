@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using socialplatform.Data;
 using socialplatform.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace socialplatform.Controllers
 {
@@ -26,8 +28,12 @@ namespace socialplatform.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Like>> Create(Like yeniLike)
         {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            yeniLike.UserID = userId;
+
             _context.Likes.Add(yeniLike);
             await _context.SaveChangesAsync();
             return Ok(yeniLike);

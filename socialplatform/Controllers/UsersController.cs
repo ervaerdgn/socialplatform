@@ -23,11 +23,13 @@ namespace socialplatform.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Create(User yeniKullanici)
+        public async Task<ActionResult<User>> Create(User yenikullanici)
         {
-            _context.Users.Add(yeniKullanici);
+            yenikullanici.Password = BCrypt.Net.BCrypt.HashPassword(yenikullanici.Password);
+
+            _context.Users.Add(yenikullanici);
             await _context.SaveChangesAsync();
-            return Ok(yeniKullanici);
+            return Ok(yenikullanici);
         }
     }
 }
