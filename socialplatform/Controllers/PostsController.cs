@@ -11,11 +11,14 @@ namespace socialplatform.Controllers
     [Route("api/[controller]")]
     public class PostsController : ControllerBase
     {
+       
         private readonly AppDbContext _context;
+        private readonly IWebHostEnvironment _env; 
 
-        public PostsController(AppDbContext context)
+        public PostsController(AppDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env; 
         }
 
         [HttpGet]
@@ -51,6 +54,36 @@ namespace socialplatform.Controllers
             _context.Posts.Add(yeniPost);
             await _context.SaveChangesAsync();
             return Ok(yeniPost);
+        }
+        [HttpPost("{postId}/upload-resim")]
+        [Authorize]
+        public async Task<ActionResult> UploadPostResmi(int postId, IFormFile file)
+        {
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var post = await _context.Posts.FindAsync(postId);
+
+            if (post == null)
+                return NotFound();
+
+            if (post.UserID != userId)
+                return Forbid();
+
+            var uploadsKlasoru = Path.Combine(_env.WebRootPath, "uploads");
+            if (!Directory.Exists(uploadsKlasoru))
+                Directory.CreateDirectory(uploadsKlasoru);
+
+            var dosyaAdi = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var tamYol = Path.Combine(uploadsKlasoru, dosyaAdi);
+
+            using (var stream = new FileStream(tamYol, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            post.Photo = "/uploads/" + dosyaAdi;
+            await _context.SaveChangesAsync();
+
+            return Ok(new { resim = post.Photo });
         }
     }
 }

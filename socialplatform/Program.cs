@@ -55,6 +55,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 if (app.Environment.IsDevelopment())

@@ -8,5 +8,6 @@
         public DateTime Zaman { get; set; }=DateTime.Now;
        
         public User? User { get; set; }
+        public string? Photo {  get; set; }
     }
 }
