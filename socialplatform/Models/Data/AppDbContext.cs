@@ -11,7 +11,8 @@ namespace socialplatform.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Like> Likes { get; set; }
-        public DbSet<Follow> Follows { get; set; } 
+        public DbSet<Follow> Follows { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,17 @@ namespace socialplatform.Data
                 .HasOne(f => f.Following)
                 .WithMany()
                 .HasForeignKey(f => f.FollowingID)
+                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Message>()
+    .HasOne(m => m.Gonderen)
+    .WithMany()
+    .HasForeignKey(m => m.GonderenId)
+    .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Alici)
+                .WithMany()
+                .HasForeignKey(m => m.AliciID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
