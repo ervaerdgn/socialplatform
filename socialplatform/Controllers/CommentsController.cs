@@ -26,17 +26,29 @@ namespace socialplatform.Controllers
                 .Include(c => c.Post)
                 .ToListAsync();
         }
-
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Comment>> Create(Comment yeniComment)
+        public async Task<ActionResult<Like>> Create(Like newcomment)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            yeniComment.UserID = userId;
+            newcomment.UserID = userId;
 
-            _context.Comments.Add(yeniComment);
+            _context.Likes.Add(newcomment);
             await _context.SaveChangesAsync();
-            return Ok(yeniComment);
+
+            var post = await _context.Posts.FindAsync(newcomment.PostID);
+            if (post != null && post.UserID != userId)
+            {
+                var bildirim = new Notification
+                {
+                    UserID = post.UserID,
+                    Mesaj = "Paylaşımına Yorum Yapıldı"
+                };
+                _context.Notifications.Add(bildirim);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(newcomment);
         }
     }
 }

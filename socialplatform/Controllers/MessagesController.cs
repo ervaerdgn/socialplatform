@@ -27,6 +27,14 @@ namespace socialplatform.Controllers
 
             _context.Messages.Add(yenimesaj);
             await _context.SaveChangesAsync();
+          
+            var bildirim = new Notification
+            {
+                UserID = yenimesaj.AliciID,
+                Mesaj = "Sana yeni bir mesaj gönderdi"
+            };
+            _context.Notifications.Add(bildirim);
+            await _context.SaveChangesAsync();
             return Ok(yenimesaj);
         }
 

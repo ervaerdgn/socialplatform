@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using socialplatform.Data;
 using socialplatform.Models;
+using System.Security.Claims;
 
 namespace socialplatform.Controllers
 {
@@ -26,11 +28,24 @@ namespace socialplatform.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Follow>> Create(Follow yeniFollow)
+        [Authorize]
+        public async Task<ActionResult<Follow>> Create(Follow newfollow)
         {
-            _context.Follows.Add(yeniFollow);
+            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+           newfollow.FollowerID = userId;
+
+            _context.Follows.Add(newfollow);
             await _context.SaveChangesAsync();
-            return Ok(yeniFollow);
+
+            var bildirim = new Notification
+            {
+                UserID = newfollow.FollowingID,
+                Mesaj = "Seni takip etmeye başladı"
+            };
+            _context.Notifications.Add(bildirim);
+            await _context.SaveChangesAsync();
+
+            return Ok(newfollow);
         }
     }
 }

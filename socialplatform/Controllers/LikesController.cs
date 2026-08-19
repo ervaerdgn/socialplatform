@@ -29,14 +29,27 @@ namespace socialplatform.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Like>> Create(Like yeniLike)
+        public async Task<ActionResult<Like>> Create(Like newlike)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            yeniLike.UserID = userId;
+           newlike.UserID = userId;
 
-            _context.Likes.Add(yeniLike);
+            _context.Likes.Add(newlike);
             await _context.SaveChangesAsync();
-            return Ok(yeniLike);
+
+            var post = await _context.Posts.FindAsync(newlike.PostID);
+            if (post != null && post.UserID != userId)
+            {
+                var bildirim = new Notification
+                {
+                    UserID = post.UserID,
+                    Mesaj = "Paylaşımına Beğeni Geldi"
+                };
+                _context.Notifications.Add(bildirim);
+                await _context.SaveChangesAsync();
+            }
+
+            return Ok(newlike);
         }
     }
 }

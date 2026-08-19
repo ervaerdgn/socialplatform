@@ -13,6 +13,8 @@ namespace socialplatform.Data
         public DbSet<Like> Likes { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,6 +51,11 @@ namespace socialplatform.Data
                 .WithMany()
                 .HasForeignKey(m => m.AliciID)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Notification>()
+    .HasOne(n => n.User)
+    .WithMany()
+    .HasForeignKey(n => n.UserID)
+    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
