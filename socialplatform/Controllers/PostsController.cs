@@ -20,12 +20,28 @@ namespace socialplatform.Controllers
             _context = context;
             _env = env; 
         }
-
         [HttpGet]
-        public async Task<ActionResult<List<Post>>> GetAll()
+        public async Task<ActionResult<PagedResult<Post>>> GetAll(int page = 1, int pageSize = 10)
         {
+            var toplamKayit = await _context.Posts.CountAsync();
 
-            return await _context.Posts.Include(p => p.User).ToListAsync();
+            var postlar = await _context.Posts
+                .Include(p => p.User)
+                .OrderByDescending(p => p.Zaman)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var sonuc = new PagedResult<Post>
+            {
+                Veriler = postlar,
+                ToplamKayit = toplamKayit,
+                SayfaNo = page,
+                SayfaBoyutu = pageSize,
+                ToplamSayfa = (int)Math.Ceiling(toplamKayit / (double)pageSize)
+            };
+
+            return sonuc;
         }
         [HttpGet("feed/{userId}")]
         public async Task<ActionResult<List<Post>>> GetFeed(int userId)
@@ -84,6 +100,17 @@ namespace socialplatform.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new { resim = post.Photo });
+        }
+        [HttpGet("ara")]
+        public async Task<ActionResult<List<Post>>> Ara(string kelime)
+        {
+            var sonuclar = await _context.Posts
+                .Include(p => p.User)
+                .Where(p => p.Metin.Contains(kelime))
+                .OrderByDescending(p => p.Zaman)
+                .ToListAsync();
+
+            return sonuclar;
         }
     }
 }

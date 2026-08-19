@@ -62,5 +62,14 @@ namespace socialplatform.Controllers
 
             return Ok(new { profilResmi = kullanici.ProfilePhoto });
         }
+        [HttpGet("ara")]
+        public async Task<ActionResult<List<User>>> Ara(string kelime)
+        {
+            var sonuclar = await _context.Users
+                .Where(u => u.Name.Contains(kelime))
+                .ToListAsync();
+
+            return sonuclar;
+        }
     }
 }
