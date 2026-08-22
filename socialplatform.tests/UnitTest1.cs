@@ -22,7 +22,7 @@ namespace socialplatform.Tests
                     Name = "Test Erva",
                     Email = "erva@test.com",
                     Password = "123",
-                    Time = DateTime.Now
+                    Time = DateTime.UtcNow
                 };
 
                 context.Users.Add(yeniKullanici);

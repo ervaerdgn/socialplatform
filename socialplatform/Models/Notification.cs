@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Mesaj { get; set; } = string.Empty;
-        public DateTime Zaman { get; set; } = DateTime.Now;
+        public DateTime Zaman { get; set; } = DateTime.UtcNow;
         public bool Okundu { get; set; } = false;
 
         public int UserID { get; set; }
