@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Metin { get; set; } = string.Empty;
-        public DateTime Zaman { get; set; } = DateTime.Now;
+        public DateTime Zaman { get; set; } = DateTime.UtcNow;
 
         public int UserID { get; set; }
         public User? User { get; set; }
