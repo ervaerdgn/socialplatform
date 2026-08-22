@@ -125,25 +125,23 @@ This project was built for learning purposes as part of a personal backend devel
 Here is a visual walk-through of the API in action, demonstrating core functionalities, secure authentication, and robust error handling:
 
 ### 1. API Overview & Structure
-![Swagger UI Overview](<img width="1245" height="915" alt="1" src="https://github.com/user-attachments/assets/77e3569d-77c4-4981-9d11-4b81e476ba8b" />
-)
-![Swagger UI Endpoints](<img width="1189" height="789" alt="2 (2)" src="https://github.com/user-attachments/assets/f95a3231-f79e-4c61-9a75-1b601e578dd7" />
-)
+
+<img width="1189" height="789" alt="2 (2)" src="https://github.com/user-attachments/assets/4d73f5a0-93d3-4363-8339-0dd9f0a3df8a" />
+<img width="1245" height="915" alt="1" src="https://github.com/user-attachments/assets/889c0c8b-9448-4272-a3a4-1724475564eb" />
+
 
 ### 2. User Registration & Secure Authentication (JWT)
-![User Registration](<img width="1198" height="659" alt="3" src="https://github.com/user-attachments/assets/ecf19f83-98a7-4ad9-9417-218ee26fa922" />
-)
-![User Login](<img width="1193" height="623" alt="4" src="https://github.com/user-attachments/assets/14a5c201-5445-4772-800b-a9d255e7a2ef" />
-)
-![JWT Authorization](<img width="573" height="279" alt="5" src="https://github.com/user-attachments/assets/400ca6ca-7f7d-4dca-8f0a-af6eb2ae723e" />
-)
+<img width="573" height="279" alt="5" src="https://github.com/user-attachments/assets/f59de5a4-adde-4679-ad1d-38a3d74f1074" />
+<img width="1193" height="623" alt="4" src="https://github.com/user-attachments/assets/c7ca8d44-77d2-45e7-8452-ab27e3271d30" />
+<img width="1198" height="659" alt="3" src="https://github.com/user-attachments/assets/00061dd6-0ac4-4fd9-9647-af6953861262" />
+
 
 ### 3. Core Social Features in Action
-![Successful Like Request](<img width="1193" height="611" alt="6" src="https://github.com/user-attachments/assets/90931477-fc67-4038-a856-c320ac539fe8" />
-)
-![Successful Follow Request](<img width="1919" height="1079" alt="8" src="https://github.com/user-attachments/assets/f193c531-8b00-4029-a9a1-41f41f4debdb" />
-)
+<img width="1919" height="1079" alt="8" src="https://github.com/user-attachments/assets/915ac9fa-b9e4-4a12-974d-77a158b69d16" />
+<img width="1193" height="611" alt="6" src="https://github.com/user-attachments/assets/6eee61c4-168e-4cda-abb5-79ed8d3919d1" />
+
 
 ### 4. Robust Error Handling (Referential Integrity)
-![Error Handling](<img width="1919" height="1079" alt="7" src="https://github.com/user-attachments/assets/4be9e8d3-af8d-4676-8cec-104f7a291c7c" />
-)
+<img width="1919" height="1079" alt="7" src="https://github.com/user-attachments/assets/5e71694c-a295-4270-abda-efbfbe463f5c" />
+
+
